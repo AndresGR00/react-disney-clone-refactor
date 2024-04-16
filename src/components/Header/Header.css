@@ -1,0 +1,23 @@
+@media screen and (max-width:1000px){
+    header p{
+        display: none!important
+    }
+    header button{
+        padding: 10px!important;
+    }
+    header .films-icon, header .series-icon{
+        display: none!important;
+    }
+    header .logo{
+        width: 80px!important;
+        padding-right: 15px!important;
+    }
+    header button{
+        padding: 6px!important;
+    }
+    header .my-list-icon{
+        margin-right: -1px!important;
+        padding-left: 4px!important;
+    }
+}
+
