@@ -1,12 +1,5 @@
 import PropTypes from "prop-types";
-
-const truncatePlot = (plot) => {
-  if (plot && plot.length > 600) {
-    return plot.substring(0, 600) + "...";
-  } else {
-    return plot;
-  }
-};
+import { truncatePlot } from "../utils/truncatePlot";
 
 const FilmDetail = ({ title, plot, img }) => {
   const newPlot = truncatePlot(plot);

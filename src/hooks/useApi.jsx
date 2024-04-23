@@ -8,23 +8,34 @@ const useApi = (url) => {
     const fetchData = async () => {
       dispatch({ type: "FETCH_START" });
       try {
-        const responses = await Promise.all([
-          fetch(`${url}&page=1`),
-          fetch(`${url}&page=2`),
-        ]);
-        const datas = await Promise.all(
-          responses.map((response) => response.json())
-        );
-
-        const items1 = datas[0].Search || [];
-        const items2 = datas[1].Search || [];
-
-        if (items1.length === 0 && items2.length === 0) {
-          dispatch({ type: "FETCH_ERROR" });
+        let response = null;
+        if (url.includes("&i=")) {
+          response = await fetch(url);
         } else {
-          const allItems = [...items1, ...items2];
-          const shuffledItems = allItems.sort(() => Math.random() - 0.5);
-          dispatch({ type: "FETCH_SUCCESS", payload: shuffledItems });
+          const responses = await Promise.all([
+            fetch(`${url}&page=1`),
+            fetch(`${url}&page=2`),
+          ]);
+          const datas = await Promise.all(
+            responses.map((response) => response.json())
+          );
+
+          const items1 = datas[0].Search || [];
+          const items2 = datas[1].Search || [];
+
+          if (items1.length === 0 && items2.length === 0) {
+            dispatch({ type: "FETCH_ERROR" });
+            return;
+          } else {
+            const allItems = [...items1, ...items2];
+            const shuffledItems = allItems.sort(() => Math.random() - 0.5);
+            dispatch({ type: "FETCH_SUCCESS", payload: shuffledItems });
+          }
+        }
+        
+        if (response) {
+          const data = await response.json();
+          dispatch({ type: "FETCH_SUCCESS", payload: data });
         }
       } catch (error) {
         console.error("Error fetching data:", error);

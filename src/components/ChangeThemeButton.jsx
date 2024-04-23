@@ -1,23 +1,7 @@
-import { useEffect, useRef } from "react";
-import { useState } from "react";
+import { useTheme } from "../hooks/useTheme";
 
 const ChangeThemeButton = () => {
-  const htmlRef = useRef(document.documentElement);
-  const [theme, setTheme] = useState("dark");
-
-  useEffect(() => {
-    if (theme === "dark") {
-      htmlRef.current.classList.add("dark");
-    } else {
-      htmlRef.current.classList.remove("dark");
-    }
-  }, [theme]);
-
-  const onHandleChangeTheme = () => {
-    setTheme((currentTheme) => {
-      return currentTheme === "light" ? "dark" : "light";
-    });
-  };
+  const { onHandleChangeTheme } = useTheme('dark')
 
   return (
     <svg
